@@ -1,0 +1,47 @@
+
+
+/* Appliquer une police agréable */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Style du titre */
+h1 {
+    color: #007bff;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Style des paragraphes */
+p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Style des liens */
+a {
+    color: #ff4500;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #d63031;
+    text-decoration: underline;
+}
+
+/* Conteneur pour centrer le texte */
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
