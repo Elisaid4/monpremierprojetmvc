@@ -1,0 +1,38 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programme TV</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Lien vers le fichier CSS -->
+</head>
+<body>
+    <%- include('navbar') %> <!-- Inclusion de la barre de navigation -->
+    <h1>Programme TV</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Type</th>
+                <th>Date de diffusion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% programme.forEach(programme => { %> <!-- Boucle pour afficher chaque programme -->
+                <tr>
+                    <td><%= programme.titre %></td>
+                    <td><%= programme.type_programme %></td>
+                    <td><%= programme.date_diffusion %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <img src="/images/programmes.webp" alt="Programme TV" style="width: 100%; height: auto;"> <!-- Image illustrant les programmes -->
+    <img src="/images/programmes.webp" alt="Programme TV" style="width: 100%; height: auto;"> <!-- Image illustrant les programmes -->
+    <%- include('footer') %> <!-- Inclusion du pied de page -->
+</body>
+</html>
