@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,16 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>À propos</title>
     <link rel="stylesheet" href="/css/style.css"> <!-- Lien vers le fichier CSS -->
+    
+      
+    
 </head>
 <body>
     <%- include('navbar') %> <!-- Inclusion de la barre de navigation -->
     <h1>À propos de notre équipe</h1>
-    <ul>
-        <% equipe.forEach(membre => { %> <!-- Boucle pour afficher chaque membre de l'équipe -->
-            <li><strong><%= membre.nom %></strong> - <%= membre.role %></li>
+    <div class="team-container">
+        <% equipe.forEach(membre => { %>
+            <div class="team-card">
+                <img src="/images/<%= membre.nom.replace(/\s+/g, '_').toLowerCase() %>.jpg" alt="<%= membre.nom %>" class="team-image">
+                <h3><%= membre.nom %></h3>
+                <p><strong>Rôle:</strong> <%= membre.role %></p>
+            </div>
         <% }) %>
-    </ul>
-    <img src="/images/El anlami.jpg" alt="Équipe" style="width: 100%; height: auto;"> <!-- Image illustrant l'équipe -->
+    </div>
+    
     <%- include('footer') %> <!-- Inclusion du pied de page -->
 </body>
 </html>
