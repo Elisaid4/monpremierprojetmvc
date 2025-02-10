@@ -1,10 +1,20 @@
 
 
 
+
+    
+
+
 <nav>
     <link rel="stylesheet" href="/css/style.css"> <!-- Lien vers le fichier CSS pour la barre de navigation -->
     <ul>
-        <li><a href="/apropos">À propos</a></li> <!-- Lien vers la page À propos -->
-        <li><a href="/programmetv">Programme TV</a></li> <!-- Lien vers la page Programme TV -->
+        <li><a href="/video">Vidéos</a></li>
+        <li><a href="/programmetv">Programme TV</a></li>
+        <% if (session.user) { %>
+            <li><a href="/apropos">À Propos</a></li>
+            <li><form action="/logout" method="POST"><button type="submit">Déconnexion</button></form></li>
+        <% } else { %>
+            <li><a href="/login">Connexion</a></li>
+        <% } %>
     </ul>
 </nav>

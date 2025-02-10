@@ -10,7 +10,9 @@
     
 </head>
 <body>
-    <%- include('navbar') %> <!-- Inclusion de la barre de navigation -->
+    <% if (locals.session.user) { %>
+        <%- include('navbar') %> 
+    <% } %>
     <h1>À propos de notre équipe</h1>
     <div class="team-container">
         <% equipe.forEach(membre => { %>

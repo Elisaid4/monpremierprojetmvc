@@ -1,31 +1,82 @@
-
-
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIDEO</title>
     <link rel="stylesheet" href="/css/video.css"> <!-- Lien vers le fichier CSS -->
+    <%- include('navbar') %> <!-- Inclusion de la barre de navigation -->
 </head>
 <body>
 
-     <h1>Des exemple video pour bien illustre mes programme tv</h1>
-   
+    <h1>Des exemples de vidéos pour illustrer mes programmes TV</h1>
 
-    <p>clique sur  <a href="https://www.youtube.com/watch?v=cThcPkc8b4c" target="_blank"> chigoma </a> pour rentre directe sur la video d'un exemple de chigoma
-        </p>
-        <p>clique sur  <a href="https://www.youtube.com/watch?v=GsKt9kon8GE" target="_blank"> debat </a> pour rentre directe sur la video d'un exemple de chigoma
-        </p>
-        <p>clique sur  <a href="https://www.youtube.com/watch?v=bzMsZLV_trM" target="_blank"> chant </a> pour rentre directe sur la video d'un exemple de chigoma
-        </p>
-        <p>clique sur  <a href="https://www.youtube.com/watch?v=y7n8dZV1CF0&t=39s" target="_blank"> mbiwi </a> pour rentre directe sur la video d'un exemple de chigoma
-        </p>
-        <p>clique sur  <a href="https://www.youtube.com/watch?v=vD5CoJw9zn0" target="_blank"> manzarak </a> pour rentre directe sur la video d'un exemple de chigoma
-        </p>
+    <form action="/ajouter-video" method="POST">
+        <label for="nom_video">Nom de la vidéo :</label>
+        <input type="text" id="nom_video" name="nom_video" required>
+    
+        <label for="titre">Titre :</label>
+        <input type="text" id="titre" name="titre" required>
+    
+        <label for="lien_video">Lien de la vidéo :</label>
+        <input type="url" id="lien_video" name="lien_video" required>
+    
+        <label for="legende">Légende :</label>
+        <textarea id="legende" name="legende" required></textarea>
+    
+        <button type="submit">Ajouter</button>
+    </form>
 
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            console.log("Formulaire soumis !");
+        });
+    </script>
+
+    <!-- Affichage dynamique des vidéos -->
+    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        <% if (videos && videos.length > 0) { %>
+            <% videos.forEach(video => { %>
+                <div style="text-align: center; width: 400px; border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+                    <h3><%= video.titre %></h3>
+                    <iframe width="400" height="200" src="<%= video.lien_video.replace('watch?v=', 'embed/') %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <p><%= video.legende %></p>
+
+                    <!-- Bouton Modifier -->
+                    <button onclick="ouvrirFormulaire(<%= video.id %>, '<%= video.titre %>', '<%= video.legende %>', '<%= video.lien_video %>')">Modifier</button>
+
+                    <!-- Formulaire de modification caché -->
+                    <form id="form-modifier-<%= video.id %>" action="/modifier-video/<%= video.id %>" method="POST" style="display: none;">
+                        <label>Titre:</label>
+                        <input type="text" name="titre" value="<%= video.titre %>">
+                        
+                        <label>Légende:</label>
+                        <input type="text" name="legende" value="<%= video.legende %>">
+                        
+                        <label>Lien:</label>
+                        <input type="url" name="lien_video" value="<%= video.lien_video %>">
+                        
+                        <button type="submit">Enregistrer</button>
+                    </form>
+
+                    <!-- Bouton Supprimer -->
+                    <form action="/supprimer-video/<%= video.id %>" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette vidéo ?');">
+                        <button type="submit" style="background-color: red; color: white;">Supprimer</button>
+                    </form>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>Aucune vidéo disponible</p>
+        <% } %>
+    </div>
+
+    <script>
+        function ouvrirFormulaire(id, titre, legende, lien) {
+            let formulaire = document.getElementById('form-modifier-' + id);
+            formulaire.style.display = formulaire.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+
+    <%- include('footer') %> <!-- Inclusion du pied de page -->
 </body>
 </html>
