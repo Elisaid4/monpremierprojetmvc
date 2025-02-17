@@ -10,8 +10,11 @@
     
 </head>
 <body>
-    <% if (locals.session.user) { %>
-        <%- include('navbar') %> 
+    <%- include('navbar') %> <!-- Inclusion de la barre de navigation -->
+    <% if (user) { %>
+        <p>Bienvenue, <strong><%= user.prenom %> <%= user.nom %></strong> !</p>
+     <% } else { %>
+         //<p>Vous n'êtes pas connecté.</p>
     <% } %>
     <h1>À propos de notre équipe</h1>
     <div class="team-container">

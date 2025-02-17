@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIDEO</title>
     <link rel="stylesheet" href="/css/video.css"> <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="/css/form.css"> <!-- Lien vers le fichier CSS -->
     <%- include('navbar') %> <!-- Inclusion de la barre de navigation -->
 </head>
 <body>
 
     <h1>Des exemples de vidéos pour illustrer mes programmes TV</h1>
 
-    <form action="/ajouter-video" method="POST">
+    <!-- Formulaire d'ajout de vidéo -->
+    <form id="ajouter-video-form" action="/ajouter-video" method="POST">
         <label for="nom_video">Nom de la vidéo :</label>
         <input type="text" id="nom_video" name="nom_video" required>
     
@@ -27,41 +29,35 @@
         <button type="submit">Ajouter</button>
     </form>
 
-    <script>
-        document.querySelector("form").addEventListener("submit", function(event) {
-            console.log("Formulaire soumis !");
-        });
-    </script>
-
     <!-- Affichage dynamique des vidéos -->
-    <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+    <div class="videos-container">
         <% if (videos && videos.length > 0) { %>
             <% videos.forEach(video => { %>
-                <div style="text-align: center; width: 400px; border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+                <div class="video-card">
                     <h3><%= video.titre %></h3>
                     <iframe width="400" height="200" src="<%= video.lien_video.replace('watch?v=', 'embed/') %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <p><%= video.legende %></p>
 
                     <!-- Bouton Modifier -->
-                    <button onclick="ouvrirFormulaire(<%= video.id %>, '<%= video.titre %>', '<%= video.legende %>', '<%= video.lien_video %>')">Modifier</button>
+                    <button onclick="ouvrirFormulaire(<%= video.id %>)">Modifier</button>
 
                     <!-- Formulaire de modification caché -->
-                    <form id="form-modifier-<%= video.id %>" action="/modifier-video/<%= video.id %>" method="POST" style="display: none;">
-                        <label>Titre:</label>
-                        <input type="text" name="titre" value="<%= video.titre %>">
+                    <form class="modifier-video-form" id="form-modifier-<%= video.id %>" action="/modifier-video/<%= video.id %>" method="POST" style="display: none;">
+                        <label for="titre-<%= video.id %>">Titre :</label>
+                        <input type="text" id="titre-<%= video.id %>" name="titre" value="<%= video.titre %>">
                         
-                        <label>Légende:</label>
-                        <input type="text" name="legende" value="<%= video.legende %>">
+                        <label for="legende-<%= video.id %>">Légende :</label>
+                        <input type="text" id="legende-<%= video.id %>" name="legende" value="<%= video.legende %>">
                         
-                        <label>Lien:</label>
-                        <input type="url" name="lien_video" value="<%= video.lien_video %>">
+                        <label for="lien_video-<%= video.id %>">Lien :</label>
+                        <input type="url" id="lien_video-<%= video.id %>" name="lien_video" value="<%= video.lien_video %>">
                         
                         <button type="submit">Enregistrer</button>
                     </form>
 
                     <!-- Bouton Supprimer -->
                     <form action="/supprimer-video/<%= video.id %>" method="POST" onsubmit="return confirm('Voulez-vous vraiment supprimer cette vidéo ?');">
-                        <button type="submit" style="background-color: red; color: white;">Supprimer</button>
+                        <button type="submit" class="delete-button">Supprimer</button>
                     </form>
                 </div>
             <% }) %>
@@ -71,9 +67,9 @@
     </div>
 
     <script>
-        function ouvrirFormulaire(id, titre, legende, lien) {
+        function ouvrirFormulaire(id) {
             let formulaire = document.getElementById('form-modifier-' + id);
-            formulaire.style.display = formulaire.style.display === 'none' ? 'block' : 'none';
+            formulaire.style.display = (formulaire.style.display === 'none') ? 'block' : 'none';
         }
     </script>
 

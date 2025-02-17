@@ -12,7 +12,12 @@ module.exports = {
                     return res.status(500).json({ error: 'Erreur serveur lors de la récupération des données' });
                 }
 
-                return res.render('apropos', { equipe: rows });
+                console.log("Utilisateur connecté :", req.session.user); // DEBUG
+
+                return res.render('apropos', { 
+                    user: req.session.user || null, // Assure que user est défini
+                    equipe: rows 
+                });
             });
         });
     }
